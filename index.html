@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohnish Venna - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Particle Background */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        .header h1 {
+            font-size: 60px;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            margin: 20px 0;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ccc;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            margin-bottom: 60px;
+            animation: slideUp 1s ease-in;
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 32px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            width: 50px;
+            height: 3px;
+            background: #ffffff;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+        }
+
+        p, li {
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .card {
+            background: rgba(40, 40, 40, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #ffffff;
+            color: #0a0a0a;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background: #ccc;
+            color: #0a0a0a;
+        }
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .projects-grid .card {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .projects-grid {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 40px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            p, li {
+                font-size: 14px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Mohnish Venna</h1>
+        <p>Hyderabad, Telangana | +91-9951789555 | vennamohnish9555@gmail.com</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/mohnish-venna-a69886256/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/MOHNISHVENNA" target="_blank">Github</a>
+            <a href="https://www.credly.com/users/mohnish-venna" target="_blank">Credly</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Introduction -->
+        <h2>Introduction</h2>
+        <div class="card">
+            <p>Hey there! I'm Mohnish Venna, a tech enthusiast and aspiring software engineer with a passion for building innovative and impactful solutions. I love diving deep into the world of full-stack development, artificial intelligence, and cloud computing, constantly exploring new technologies to push my limits. Whether it's crafting sleek web applications, solving complex problems with AI, or developing scalable systems, I thrive on challenges that fuel my curiosity. Beyond coding, I’m an active learner, always seeking opportunities to grow and make a difference. Let’s connect and create something amazing!</p>
+        </div>
+
+        <!-- Education -->
+        <h2>Education</h2>
+        <div class="card">
+            <p><strong>B. Tech in Computer Science and Engineering</strong><br>Vellore Institute of Technology, Vellore (2021-2025)<br>CGPA: 7.77/10</p>
+        </div>
+        <div class="card">
+            <p><strong>Board of Intermediate Education (Class XII)</strong><br>Sri Chaitanya Junior College (2019-2021)<br>Marks: 883/1000</p>
+        </div>
+        <div class="card">
+            <p><strong>Board of Secondary Education (Class X)</strong><br>FIITJEE International School (2019)<br>CGPA: 9.3/10</p>
+        </div>
+
+        <!-- Experience -->
+        <h2>Experience</h2>
+        <div class="card">
+            <p><strong>Bharat Electronics Limited (BEL)</strong><br>Trainee Intern, Machilipatnam, Andhra Pradesh<br>Aug. 2023 - Sep. 2023</p>
+            <ul>
+                <li>Developed and enhanced camera control software with object detection and tracking features.</li>
+                <li>Improved usability and basic functionalities of the camera system, ensuring smoother operation.</li>
+            </ul>
+            <a href="https://drive.google.com/file/d/1SBJ5PEhJHRpZYzbAvRfOjl5s8f5KNAym/view" target="_blank" class="btn">View Certificate</a>
+        </div>
+
+        <!-- Projects -->
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="card">
+                <p><strong>Basic Calculator</strong><br>ReactJs, Javascript, Bootstrap, HTML, CSS</p>
+                <ul>
+                    <li>A simple calculator that performs all basic mathematical operations and evaluates complex expressions using BODMAS.</li>
+                </ul>
+                <a href="https://react-task2-sepia.vercel.app/" target="_blank" class="btn">View Project</a>
+            </div>
+            <div class="card">
+                <p><strong>Vit Parking</strong><br>NodeJS, ExpressJS, MongoDB, ReactJs, Javascript, Bootstrap, HTML, CSS<br>November 2023 - March 2024</p>
+                <ul>
+                    <li>Designed and built a full-stack web application using the MERN stack for parking reservations.</li>
+                    <li>Implemented user authentication, real-time updates, and database management features.</li>
+                </ul>
+                <a href="https://vit-parking-frontend.vercel.app/" target="_blank" class="btn">View Project</a>
+            </div>
+            <div class="card">
+                <p><strong>Spam Comments Detection</strong><br>Python, Google Colab, Scikit-learn, TensorFlow, DeBERTa<br>October 2024</p>
+                <ul>
+                    <li>Constructed a spam comment detection system on Google Colab using an ensemble of Random Forest, SVM, LSTM, and DeBERTa models.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Technical Skills -->
+        <h2>Technical Skills</h2>
+        <div class="card">
+            <p><strong>Programming Languages:</strong> Python, SQL, C/C++</p>
+            <p><strong>Technologies:</strong> Node.js, Express.js, MongoDB, React.js, HTML, CSS, Bootstrap, Tailwind, Material UI</p>
+        </div>
+
+        <!-- Certifications -->
+        <h2>Certifications</h2>
+        <div class="card">
+            <p><a href="https://drive.google.com/file/d/1I-B8iqVL0KEHLgkuTjZ-at4f8L8-XurD/view" target="_blank">Azure Fundamentals</a></p>
+        </div>
+        <div class="card">
+            <p><a href="https://www.coursera.org/account/accomplishments/verify/UK6BUSLMMAJ9" target="_blank">Meta Front End Developer</a></p>
+        </div>
+        <div class="card">
+            <p><a href="https://www.coursera.org/account/accomplishments/verify/SFWCPRGQBHJT" target="_blank">IBM AI Developer</a></p>
+        </div>
+        <div class="card">
+            <p><a href="https://drive.google.com/file/d/1oE4_5PcEasaVdduDCBrSN87aTaz48e26/view" target="_blank">Introduction to Digital Transformation with Google Cloud</a></p>
+        </div>
+        <div class="card">
+            <p><a href="https://drive.google.com/file/d/1lJPqVH0jdWIGw-uN9KW5jg3GxOSqnFFp/view?usp=sharing" target="_blank">Python Certificate</a></p>
+        </div>
+
+        <!-- Languages -->
+        <h2>Languages</h2>
+        <div class="card">
+            <p>English, Telugu, Hindi, Spanish</p>
+        </div>
+
+        <!-- Leadership / Extracurricular -->
+        <h2>Leadership / Extracurricular</h2>
+        <div class="card">
+            <p><strong>CUBE VIT (Organizer)</strong><br>September 2024</p>
+            <ul>
+                <li>Organized the VIT Cube Challenge 2024, a two-day WCA competition featuring multiple events like 3x3, 2x2, Pyraminx, and 3x3 BLD.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <p><strong>YOUTH RED CROSS ASSOCIATION (Club Member)</strong></p>
+            <ul>
+                <li>Participated in YRC events like the 3-Day Zonal Level Study Camp, Haemophilia Highlight Trivia, and Protect the Children.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Particle.js CDN and Configuration -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>
