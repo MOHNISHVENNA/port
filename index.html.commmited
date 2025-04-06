@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Voice Twin Stories</title>
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b, #ffd700, #00ffcc);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      animation: backgroundShift 10s infinite linear;
+      position: relative;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+      margin: 0;
+      color: #ffeb3b;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .screen {
+      display: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 25px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out; /* Smooth transition */
+    }
+
+    .screen.active {
+      display: block;
+      opacity: 1;
+    }
+
+    #home-screen {
+      display: block;
+      opacity: 1;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #ffeb3b;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.5;
+      color: #fff;
+    }
+
+    button, select {
+      background: linear-gradient(45deg, #ff00cc, #ffeb3b, #00ffcc);
+      color: #1e1e1e;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.5s;
+    }
+
+    button:hover, select:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(45deg, #00ffcc, #ffeb3b, #ff00cc);
+    }
+
+    #story-text {
+      font-style: italic;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 2px solid #ffeb3b;
+    }
+
+    #rating {
+      margin: 10px 0;
+    }
+
+    #rating button {
+      background: #ffeb3b;
+      color: #1e1e1e;
+      padding: 8px 15px;
+      margin: 5px;
+    }
+
+    #history {
+      font-size: 1em;
+      color: #ffeb3b;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.2em; }
+      h2 { font-size: 1.6em; }
+      p { font-size: 1em; }
+      button, select { font-size: 1em; padding: 10px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dotsCanvas"></canvas>
+  <header>
+    <h1>AI Voice Twin Stories</h1>
+  </header>
+
+  <!-- Home Screen -->
+  <div class="screen" id="home-screen">
+    <h2>Welcome to AI Voice Twin Stories</h2>
+    <p>Select a genre to dive into your personalized story adventure!</p>
+    <button onclick="showStorySelection()">Select Genre</button>
+    <div id="history"></div>
+  </div>
+
+  <!-- Genre Selection Screen -->
+  <div class="screen" id="genre-selection-screen">
+    <h2>Choose a Genre</h2>
+    <button onclick="playStory('Thriller')">Thriller</button>
+    <button onclick="playStory('Comedy')">Comedy</button>
+    <button onclick="playStory('Motivational')">Motivational</button>
+  </div>
+
+  <!-- Story Playback Screen -->
+  <div class="screen" id="story-playback-screen">
+    <h2>Now Playing</h2>
+    <p id="story-text">Your personalized story will appear here...</p>
+    <select id="voice-selection" onchange="updateVoice()">
+      <option value="default">Default Voice</option>
+      <option value="male">Male Voice</option>
+      <option value="female">Female Voice</option>
+    </select>
+    <button onclick="readStory()">Play Story</button>
+    <button onclick="goBackToHome()">Back to Home</button>
+    <div id="rating">
+      <p>Rate this story:</p>
+      <button onclick="rateStory(1)">1 ★</button>
+      <button onclick="rateStory(2)">2 ★</button>
+      <button onclick="rateStory(3)">3 ★</button>
+      <button onclick="rateStory(4)">4 ★</button>
+      <button onclick="rateStory(5)">5 ★</button>
+    </div>
+  </div>
+
+  <script>
+    // Falling Dots Animation
+    const canvas = document.getElementById('dotsCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const dots = [];
+    for (let i = 0; i < 50; i++) {
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        speed: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function animateDots() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      dots.forEach(dot => {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+        ctx.fill();
+        dot.y += dot.speed;
+        if (dot.y > canvas.height) dot.y = -dot.radius;
+      });
+      requestAnimationFrame(animateDots);
+    }
+    animateDots();
+
+    // Smooth Screen Transitions
+    function switchScreen(fromId, toId) {
+      const fromScreen = document.getElementById(fromId);
+      const toScreen = document.getElementById(toId);
+      fromScreen.classList.remove('active');
+      setTimeout(() => {
+        fromScreen.style.display = 'none';
+        toScreen.style.display = 'block';
+        setTimeout(() => toScreen.classList.add('active'), 10);
+      }, 500); // Matches transition duration
+    }
+
+    function showStorySelection() {
+      switchScreen('home-screen', 'genre-selection-screen');
+    }
+
+    function playStory(genre) {
+      switchScreen('genre-selection-screen', 'story-playback-screen');
+      
+      let storyText = '';
+      if (genre === 'Thriller') {
+        storyText = "Thriller: The fog thickened as footsteps echoed in the distance, a chilling reminder that escape was no longer an option...";
+      } else if (genre === 'Comedy') {
+        storyText = "Comedy: With a rubber chicken in hand and a plan doomed to fail, Larry embarked on the heist of the century...";
+      } else if (genre === 'Motivational') {
+        storyText = "Motivational: Each step forward carved a path through the storm, proving that resilience turns dreams into triumphs...";
+      }
+      
+      document.getElementById("story-text").innerText = storyText;
+      saveToHistory(genre, storyText);
+    }
+
+    function goBackToHome() {
+      switchScreen('story-playback-screen', 'home-screen');
+    }
+
+    // Text-to-Speech Integration
+    const synth = window.speechSynthesis;
+    let voices = [];
+    function populateVoices() {
+      voices = synth.getVoices();
+    }
+    synth.onvoiceschanged = populateVoices;
+
+    function updateVoice() {
+      const voiceSelect = document.getElementById("voice-selection").value;
+    }
+
+    function readStory() {
+      const storyText = document.getElementById("story-text").innerText;
+      const utterance = new SpeechSynthesisUtterance(storyText);
+      const voiceSelect = document.getElementById("voice-selection").value;
+
+      if (voiceSelect === 'male') {
+        utterance.voice = voices.find(v => v.name.includes('Male') || v.name.includes('David')) || voices[0];
+      } else if (voiceSelect === 'female') {
+        utterance.voice = voices.find(v => v.name.includes('Female') || v.name.includes('Zira')) || voices[0];
+      }
+      
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      synth.speak(utterance);
+    }
+
+    // User Feedback (Rating)
+    function rateStory(rating) {
+      const storyText = document.getElementById("story-text").innerText;
+      const history = JSON.parse(localStorage.getItem('storyHistory') || '[]');
+      const story = history.find(s => s.text === storyText);
+      if (story) {
+        story.rating = rating;
+        localStorage.setItem('storyHistory', JSON.stringify(history));
+        alert(`You rated this story ${rating} stars!`);
+      }
+    }
+
+    // Personalized User Accounts and History (using localStorage)
+    function saveToHistory(genre, text) {
+      const history = JSON.parse(localStorage.getItem('storyHistory') || '[]');
+      history.push({ genre, text, timestamp: new Date().toLocaleString(), rating: null });
+      localStorage.setItem('storyHistory', JSON.stringify(history));
+      updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+      const history = JSON.parse(localStorage.getItem('storyHistory') || '[]');
+      const historyDiv = document.getElementById('history');
+      historyDiv.innerHTML = '<h3>Your Story History</h3>';
+      if (history.length === 0) {
+        historyDiv.innerHTML += '<p>No stories yet!</p>';
+      } else {
+        history.forEach(story => {
+          historyDiv.innerHTML += `<p>${story.timestamp}: ${story.genre} - ${story.rating ? `Rated: ${story.rating} ★` : 'Not rated'}</p>`;
+        });
+      }
+    }
+
+    // Load history on page load
+    window.onload = updateHistoryDisplay;
+  </script>
+</body>
+</html>
